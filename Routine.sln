@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Routine.Api", "Routine.Api\Routine.Api.csproj", "{605CC4C7-0D62-4299-A77E-1DD0F68046C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routine.Domain", "Routine.Domain\Routine.Domain.csproj", "{D5A5E486-CD94-4938-BE95-4D59E87BAA8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Routine.Domain", "Routine.Domain\Routine.Domain.csproj", "{D5A5E486-CD94-4938-BE95-4D59E87BAA8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Routine.Infrastructure", "Routine.Infrastructure\Routine.Infrastructure.csproj", "{E5FAD473-60B6-4300-96FA-26831C4BC8D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Routine.Infrastructure", "Routine.Infrastructure\Routine.Infrastructure.csproj", "{E5FAD473-60B6-4300-96FA-26831C4BC8D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

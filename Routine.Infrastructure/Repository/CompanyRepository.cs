@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Routine.Domain.DtoParameters;
 using Routine.Domain.Entities;
 using Routine.Domain.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Routine.Infrastructure.Repository;
 
@@ -34,9 +30,32 @@ public class CompanyRepository(RoutineDbContext db) : ICompanyRepository
         return Task.CompletedTask;
     }
 
-    public async Task<IEnumerable<Company>> GetCompaniesAsync()
+    public async Task<IEnumerable<Company>> GetCompaniesAsync(CompanyDtoParameters? parameters)
     {
-        return await db.Companies.ToListAsync();
+        if (parameters == null)
+        {
+            throw new ArgumentException(nameof(parameters));
+        }
+        if (string.IsNullOrWhiteSpace(parameters.CompanyName) && 
+            string.IsNullOrWhiteSpace(parameters.SearchTerm))
+        {
+            return await db.Companies.ToListAsync();
+        }
+
+        var queryExpression = db.Companies as IQueryable<Company>;
+
+        if (!string.IsNullOrWhiteSpace(parameters.CompanyName))
+        {
+            queryExpression = queryExpression.Where(x => x.Name == parameters.CompanyName); 
+        }
+
+        if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
+        {
+            queryExpression = queryExpression.Where(x => x.Name.Contains(parameters.SearchTerm) ||
+                                                    x.Introduction.Contains(parameters.SearchTerm));
+        }
+
+        return await queryExpression.ToListAsync();
     }
 
     public async Task<IEnumerable<Company>> GetCompaniesAsync(IEnumerable<Guid> companyIds)

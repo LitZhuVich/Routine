@@ -1,9 +1,7 @@
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Routine.Domain.IRepository;
 using Routine.Infrastructure;
 using Routine.Infrastructure.Repository;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +16,7 @@ builder.Services.AddDbContext<RoutineDbContext>(o =>
 {
     o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"));
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -30,6 +29,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseExceptionHandler(appBuilder =>
+    {
+        appBuilder.Run(async context =>
+        {
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync("Unexpected Error!");
+        });
+    });
+}
+// ×Ô¶¯Ö´ÐÐÇ¨ÒÆ
 //using (var scope = app.Services.CreateScope())
 //{
 //    try

@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Routine.Domain.Entities;
 using Routine.Domain.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Routine.Infrastructure.Repository;
 
@@ -29,12 +23,33 @@ public class EmployeeRepository(RoutineDbContext db) : IEmployeeRepository
             .SingleOrDefaultAsync(x => x.CompanyId == companyId && x.Id == employeeId);
     }
 
-    public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId)
+    public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, string? genderDisplay, string? q)
     {
-        return await db.Employees
-            .Where(x => x.CompanyId == companyId)
-            .OrderBy(x => x.EmployeeNo)
-            .ToListAsync();
+        if (string.IsNullOrWhiteSpace(genderDisplay) && string.IsNullOrWhiteSpace(q))
+        {
+            return await db.Employees
+                .Where(x => x.CompanyId == companyId)
+                .OrderBy(x => x.EmployeeNo)
+                .ToListAsync();
+        }
+
+        var items = db.Employees.Where(x => x.CompanyId == companyId);
+
+        if (!string.IsNullOrWhiteSpace(genderDisplay))
+        {
+            var gender = Enum.Parse<Gender>(genderDisplay);
+
+            items = items.Where(x => x.Gender == gender);
+        }
+
+        if (!string.IsNullOrWhiteSpace(q))
+        {
+            items = items.Where(x => x.FirstName!.Contains(q) || x.LastName!.Contains(q) || x.EmployeeNo!.Contains(q));
+        }
+
+        return await items
+               .OrderBy(x => x.EmployeeNo)
+               .ToListAsync();
     }
 
     public async Task<bool> SaveAsync()

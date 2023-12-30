@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Routine.Infrastructure;
 
@@ -11,9 +12,11 @@ using Routine.Infrastructure;
 namespace Routine.Infrastructure.Migrations
 {
     [DbContext(typeof(RoutineDbContext))]
-    partial class RoutineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231230084449_AddEmployeeData")]
+    partial class AddEmployeeData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

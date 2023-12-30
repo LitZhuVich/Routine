@@ -11,6 +11,7 @@ public class CompanyConfig : IEntityTypeConfiguration<Company>
         builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
         builder.Property(x => x.Introduction).HasMaxLength(500);
 
+        // 初始数据
         builder.HasData(
             new Company
             {

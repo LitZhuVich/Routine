@@ -1,4 +1,5 @@
-﻿using Routine.Domain.Entities;
+﻿using Routine.Domain.DtoParameters;
+using Routine.Domain.Entities;
 
 namespace Routine.Domain.IRepository;
 
@@ -8,7 +9,7 @@ public interface ICompanyRepository
     /// 获取所有公司的异步任务
     /// </summary>
     /// <returns>所有公司</returns>
-    Task<IEnumerable<Company>> GetCompaniesAsync();
+    Task<IEnumerable<Company>> GetCompaniesAsync(CompanyDtoParameters? parameters);
 
     /// <summary>
     /// 根据公司ID查找公司的异步任务

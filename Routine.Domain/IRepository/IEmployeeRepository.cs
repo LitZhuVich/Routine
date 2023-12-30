@@ -8,8 +8,10 @@ public interface IEmployeeRepository
     /// 获取指定公司的所有员工的异步任务
     /// </summary>
     /// <param name="companyId">公司ID</param>
+    /// <param name="genderDisplay">性别</param>
+    /// <param name="q">搜索内容</param>
     /// <returns>找到的员工列表</returns>
-    Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId);
+    Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, string? genderDisplay, string? q);
 
     /// <summary>
     /// 根据公司ID和员工ID查找员工的异步任务

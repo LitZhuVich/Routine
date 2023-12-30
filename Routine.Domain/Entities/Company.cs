@@ -6,6 +6,7 @@ public class Company
     public string? Name { get; set; }
     public string? Introduction { get; set; }
     public ICollection<Employee>? Employees { get; set; }
+
     public Company()
     {
         Id = Guid.NewGuid();
